@@ -1,6 +1,12 @@
 const request = require('request');
 const colors = require('colors');
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
 
+
+function status(){
 request('https://www.githubstatus.com/',  { json: true }, (err, res, body) => {  
     var name0 = body.components[0].name
     var status0 = body.components[0].status
@@ -29,7 +35,7 @@ request('https://www.githubstatus.com/',  { json: true }, (err, res, body) => {
         console.log(name0.blue,':'.blue, status0.red)
     }
 
-    
+
     if (status1 === "operational") {
         console.log(name1.blue,':'.blue, status1.green)
     } else {
@@ -82,4 +88,37 @@ request('https://www.githubstatus.com/',  { json: true }, (err, res, body) => {
     console.log("\n")
     console.log("===================".yellow)
     console.log("\n")
+    form()
 });
+}
+
+
+
+function form() {
+readline.question('Refresh? ', ref => {
+    if(ref === 'yes') {
+        console.clear()
+        status()
+    } else if (ref === 'y') {
+        console.clear()
+        status()
+    } else if (ref === 'no') {
+        console.clear()
+        console.log('goodbye!'.red)
+        process.exit()
+    } else if (ref === 'n') {
+        console.clear()
+        console.log('goodbye!'.red)
+        process.exit()
+    } else {
+        console.clear()
+        console.log('Invalid Input!'.red)
+        form()
+
+    }
+}
+  )};
+
+
+
+status()
